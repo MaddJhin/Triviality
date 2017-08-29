@@ -23,6 +23,9 @@ var triviaArray = [
     testQuestion3
 ]
 
+var remainingQuestions = 3;
+var timer;
+
 // Select a random question
 function SelectTrivia(questionBank) {
     var randIndex = Math.floor(Math.random() * questionBank.length);
@@ -37,30 +40,53 @@ function SetOptions(aTrivia) {
 }
 
 function AskTrivia(questionBank){
+    // Reduce Remaining Questions
+    remainingQuestions--;
+    console.log('Questions Remaining', remainingQuestions);
+
     var currentTrivia = SelectTrivia(questionBank);
     console.log("Question", currentTrivia.question);
 
     SetOptions(currentTrivia);
-
-    setTimeout(function() {
-        TimeUp(currentTrivia);
-    }, 3 * 1000);
+    timer = setTimeout(function() {TimeUp(currentTrivia);}, 3 * 1000);
 }
 
 function TimeUp(currentQuestion) {
-    var correctAnswer = currentQuestion.GetAnswer();
+    // Tell Player the time is up
     console.log("Time's Up!!!");
+
+    // Tell the player the right answer
+    var correctAnswer = currentQuestion.GetAnswer();
     console.log("The Correct Answer Was", correctAnswer);
 
-    setTimeout(AskTrivia(triviaArray), 3 * 1000);
+    // Display next Question after a few seconds if more questions remain
+    if(remainingQuestions > 0) {
+        setTimeout(AskTrivia(triviaArray), 3 * 1000);
+    }
 }
 
 function CorrectAnswer() {
-    
+    // Congratulate Player
+    console.log("Congratulations!!! That's Correct!");
+
+    // Display next Question after a few seconds if more questions remain
+    if(remainingQuestions > 0) {
+        setTimeout(AskTrivia(triviaArray), 3 * 1000);
+    }
 }
 
-function WrongAnswer() {
-    
+function WrongAnswer(currentQuestion) {
+    // Tell Player They Chose Wrong
+    console.log("Boooo!!! That's Wrong");
+
+    // Show correct answer
+    var correctAnswer = currentQuestion.GetAnswer();
+    console.log("The Correct Answer Was", correctAnswer);
+
+    // Display next Question after a few seconds if more questions remain
+    if(remainingQuestions > 0) {
+        setTimeout(AskTrivia(triviaArray), 3 * 1000);
+    }
 }
 
 
