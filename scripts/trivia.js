@@ -1,10 +1,16 @@
 function trivia(prompt, askA, askB, askC, askD, answer){
     this.question = prompt;
-    this.optionA = askA;
-    this.optionB = askB;
-    this.optionC = askC;
-    this.optionD = askD;
-    this.correctAnswer = answer;
+    this.answers = [
+        askA,
+        askB,
+        askC,
+        askD,
+    ],
+    this.answerIndex = answer;
+
+    this.GetAnswer = function(){
+        return this.answers[this.answerIndex];
+    };
 }
 
 var testQuestion = new trivia("What Is the Best Game", "Destiny", "Overwatch", "HotS", "Warframe", 1);
@@ -36,5 +42,16 @@ function AskTrivia(questionBank){
     console.log("Question", currentTrivia.question);
 
     SetOptions(currentTrivia);
+
+    setTimeout(function() {
+        TimeUp(currentTrivia);
+    }, 3 * 1000);
 }
+
+function TimeUp(currentQuestion) {
+    var correctAnswer = currentQuestion.GetAnswer();
+    console.log("Time's Up!!!");
+    console.log("The Correct Answer Was", correctAnswer);
+}
+
 
