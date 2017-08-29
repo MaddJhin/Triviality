@@ -37,6 +37,16 @@ function SetOptions(aTrivia) {
     console.log("Option B", aTrivia.answers[1]);
     console.log("Option C", aTrivia.answers[2]);
     console.log("Option D", aTrivia.answers[3]);
+
+    console.log("trivia length", aTrivia.answers.length);
+    // Set each possible answer to a button
+    $('#options').empty();
+    for(var i = 0; i < aTrivia.answers.length; i++){
+        console.log("Adding Question");
+        var button = $('<button></button>');
+        button.html("<p>" + aTrivia.answers[i] + "</p>");
+        $('#options').append(button);
+    }
 }
 
 function AskTrivia(questionBank){
@@ -46,6 +56,7 @@ function AskTrivia(questionBank){
 
     var currentTrivia = SelectTrivia(questionBank);
     console.log("Question", currentTrivia.question);
+    $('#question').empty().append(currentTrivia.question);
 
     SetOptions(currentTrivia);
     timer = setTimeout(function() {TimeUp(currentTrivia);}, 3 * 1000);
