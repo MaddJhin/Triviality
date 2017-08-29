@@ -17,3 +17,24 @@ var triviaArray = [
     testQuestion3
 ]
 
+// Select a random question
+function SelectTrivia(questionBank) {
+    var randIndex = Math.floor(Math.random() * questionBank.length);
+    return questionBank[randIndex];
+}
+
+function SetOptions(aTrivia) {
+    console.log("Option A", aTrivia.optionA);
+    console.log("Option B", aTrivia.optionB);
+    console.log("Option C", aTrivia.optionC);
+    console.log("Option D", aTrivia.optionD);
+}
+
+function AskTrivia(questionBank){
+    var currentTrivia = SelectTrivia(questionBank);
+    console.log('Current Trivia', currentTrivia);
+    console.log("Question", currentTrivia.question);
+
+    SetOptions(currentTrivia);
+}
+
