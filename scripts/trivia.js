@@ -38,13 +38,21 @@ function SetOptions(aTrivia) {
     console.log("Option C", aTrivia.answers[2]);
     console.log("Option D", aTrivia.answers[3]);
 
-    console.log("trivia length", aTrivia.answers.length);
-    // Set each possible answer to a button
+    // Clear previous button answers
     $('#options').empty();
+
+    // Set each possible answer to a button
     for(var i = 0; i < aTrivia.answers.length; i++){
-        console.log("Adding Question");
+        console.log("Adding Option");
         var button = $('<button></button>');
         button.html("<p>" + aTrivia.answers[i] + "</p>");
+
+        // If the answer's index matches the correct answers index
+            // On Click trigger correct answer
+
+        //Else
+            // On Click trigger wrong answer
+
         $('#options').append(button);
     }
 }
