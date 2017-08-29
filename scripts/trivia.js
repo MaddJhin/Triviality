@@ -30,15 +30,14 @@ function SelectTrivia(questionBank) {
 }
 
 function SetOptions(aTrivia) {
-    console.log("Option A", aTrivia.optionA);
-    console.log("Option B", aTrivia.optionB);
-    console.log("Option C", aTrivia.optionC);
-    console.log("Option D", aTrivia.optionD);
+    console.log("Option A", aTrivia.answers[0]);
+    console.log("Option B", aTrivia.answers[1]);
+    console.log("Option C", aTrivia.answers[2]);
+    console.log("Option D", aTrivia.answers[3]);
 }
 
 function AskTrivia(questionBank){
     var currentTrivia = SelectTrivia(questionBank);
-    console.log('Current Trivia', currentTrivia);
     console.log("Question", currentTrivia.question);
 
     SetOptions(currentTrivia);
@@ -52,6 +51,16 @@ function TimeUp(currentQuestion) {
     var correctAnswer = currentQuestion.GetAnswer();
     console.log("Time's Up!!!");
     console.log("The Correct Answer Was", correctAnswer);
+
+    setTimeout(AskTrivia(triviaArray), 3 * 1000);
+}
+
+function CorrectAnswer() {
+    
+}
+
+function WrongAnswer() {
+    
 }
 
 
