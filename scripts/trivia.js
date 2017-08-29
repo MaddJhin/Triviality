@@ -44,14 +44,29 @@ function SetOptions(aTrivia) {
     // Set each possible answer to a button
     for(var i = 0; i < aTrivia.answers.length; i++){
         console.log("Adding Option");
-        var button = $('<button></button>');
+        var button = $('<button value ='+ i +'></button>');
+
+        // Add Text to button
         button.html("<p>" + aTrivia.answers[i] + "</p>");
+        console.log("Button Value",button.attr("value"));
 
         // If the answer's index matches the correct answers index
-            // On Click trigger correct answer
+        console.log('Correct Answer', aTrivia.answerIndex,'Index', i);
 
-        //Else
+        if (aTrivia.answerIndex == i){
+            // On Click trigger correct answer
+            button.on("click", function () {
+                console.log("Button Clicked!");
+                CorrectAnswer(aTrivia);
+            });
+        }
+        else{
             // On Click trigger wrong answer
+            button.on("click", function () {
+                console.log("Button Clicked!");
+                WrongAnswer(aTrivia);
+            });
+        }
 
         $('#options').append(button);
     }
@@ -76,6 +91,7 @@ function TimeUp(currentQuestion) {
 
     // Tell the player the right answer
     var correctAnswer = currentQuestion.GetAnswer();
+    $("#question").html("The Correct Answer Was" + correctAnswer);
     console.log("The Correct Answer Was", correctAnswer);
 
     // Display next Question after a few seconds if more questions remain
@@ -86,26 +102,28 @@ function TimeUp(currentQuestion) {
 
 function CorrectAnswer() {
     // Congratulate Player
+    $("#question").html("Congratulations!!! That's Correct!");
     console.log("Congratulations!!! That's Correct!");
 
-    // Display next Question after a few seconds if more questions remain
-    if(remainingQuestions > 0) {
-        setTimeout(AskTrivia(triviaArray), 3 * 1000);
-    }
+    // // Display next Question after a few seconds if more questions remain
+    // if(remainingQuestions > 0) {
+    //     setTimeout(AskTrivia(triviaArray), 3 * 1000);
+    // }
 }
 
 function WrongAnswer(currentQuestion) {
     // Tell Player They Chose Wrong
+    $("#question").html("Boooo!!! That's Wrong");
     console.log("Boooo!!! That's Wrong");
 
-    // Show correct answer
+    // Show correct answercorrect answer
     var correctAnswer = currentQuestion.GetAnswer();
     console.log("The Correct Answer Was", correctAnswer);
 
-    // Display next Question after a few seconds if more questions remain
-    if(remainingQuestions > 0) {
-        setTimeout(AskTrivia(triviaArray), 3 * 1000);
-    }
+    // // Display next Question after a few seconds if more questions remain
+    // if(remainingQuestions > 0) {
+    //     setTimeout(AskTrivia(triviaArray), 3 * 1000);
+    // }
 }
 
 
