@@ -25,7 +25,7 @@ var questionBank = [
 
 // Variables used for initializing and resetting after changes
 var remainingQuestions = 3;
-var questionInterval = 15;
+var questionInterval = 1000;
 var resultInterval = 5;
 
 // Variables used for tracking changes
@@ -45,7 +45,7 @@ function SetOptions() {
         console.log("Adding Option", currentTrivia.answers[i]);
 
         // Make a new button with text for the answer at the current index
-        var button = $('<button></button>');
+        var button = $('<button type="button"  class="btn btn-info btn-block"></button>');
         button.html("<p>" + currentTrivia.answers[i] + "</p>");
 
         // If the answer's index matches the correct answers index
@@ -79,7 +79,7 @@ function AskTrivia(){
     console.log("Current Question", currentTrivia.question);
 
     // Empty question field of previous quesions and add the new question
-    $('#question').empty().append(currentTrivia.question);
+    $('#question').empty().append("<h3>" + currentTrivia.question + "</h3>");
 
     // Set the new options based on current trivia
     SetOptions(currentTrivia);
@@ -159,3 +159,11 @@ function Countdown(){
     console.log(count);
 }
 
+$( document ).ready(function() {
+
+    $('#btn-start').on("click", function() {
+        AskTrivia();
+        console.log("Starting Trivia!!!");
+    });
+
+});

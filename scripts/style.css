@@ -1,0 +1,30 @@
+
+.container{
+    margin: 40px auto;
+    padding: 40PX;
+    background-color: #947BBE;
+    text-align: center;
+    color: whitesmoke;
+    position: relative;
+    height: 650px;
+}
+
+button.btn.btn-info.btn-block{
+    margin-top: 1rem
+}
+
+#btn-start{
+    width: 100px;
+    margin-top: 10rem;   
+}
+
+#question, #options{
+    margin: 0px auto;
+    width: 60%;
+    text-align: center;
+    padding: 10px;
+}
+
+#question {
+
+}
