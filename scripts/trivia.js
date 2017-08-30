@@ -17,113 +17,145 @@ var testQuestion = new trivia("What Is the Best Game", "Destiny", "Overwatch", "
 var testQuestion2 = new trivia("Where Am I?", "Here", "There", "Nowhere", "Everywhere", 2);
 var testQuestion3 = new trivia("Objects are: ", "Confusing", "Awesome", "What?", "Meh", 3);
 
-var triviaArray = [
+var questionBank = [
     testQuestion,
     testQuestion2,
     testQuestion3
 ]
 
+// Variables used for initializing and resetting after changes
 var remainingQuestions = 3;
+var questionInterval = 15;
+var resultInterval = 5;
+
+// Variables used for tracking changes
+var count = questionInterval;
 var timer;
+var currentTrivia;
 
 // Select a random question
-function SelectTrivia(questionBank) {
+function SelectTrivia() {
     var randIndex = Math.floor(Math.random() * questionBank.length);
     return questionBank[randIndex];
 }
 
-function SetOptions(aTrivia) {
-    console.log("Option A", aTrivia.answers[0]);
-    console.log("Option B", aTrivia.answers[1]);
-    console.log("Option C", aTrivia.answers[2]);
-    console.log("Option D", aTrivia.answers[3]);
-
-    // Clear previous button answers
-    $('#options').empty();
-
+function SetOptions() {
     // Set each possible answer to a button
-    for(var i = 0; i < aTrivia.answers.length; i++){
-        console.log("Adding Option");
-        var button = $('<button value ='+ i +'></button>');
+    for(var i = 0; i < currentTrivia.answers.length; i++){
+        console.log("Adding Option", currentTrivia.answers[i]);
 
-        // Add Text to button
-        button.html("<p>" + aTrivia.answers[i] + "</p>");
-        console.log("Button Value",button.attr("value"));
+        // Make a new button with text for the answer at the current index
+        var button = $('<button></button>');
+        button.html("<p>" + currentTrivia.answers[i] + "</p>");
 
         // If the answer's index matches the correct answers index
-        console.log('Correct Answer', aTrivia.answerIndex,'Index', i);
-
-        if (aTrivia.answerIndex == i){
+        if (currentTrivia.answerIndex == i){
             // On Click trigger correct answer
             button.on("click", function () {
-                console.log("Button Clicked!");
-                CorrectAnswer(aTrivia);
+                console.log("Right Button Clicked!");
+                CorrectAnswer();
             });
         }
         else{
             // On Click trigger wrong answer
             button.on("click", function () {
-                console.log("Button Clicked!");
-                WrongAnswer(aTrivia);
+                console.log("Wrong Button Clicked!");
+                WrongAnswer();
             });
         }
 
+        // Attach button to options id div
         $('#options').append(button);
     }
 }
 
-function AskTrivia(questionBank){
+function AskTrivia(){
     // Reduce Remaining Questions
     remainingQuestions--;
+    count = questionInterval;
     console.log('Questions Remaining', remainingQuestions);
 
-    var currentTrivia = SelectTrivia(questionBank);
-    console.log("Question", currentTrivia.question);
+    currentTrivia = SelectTrivia();
+    console.log("Current Question", currentTrivia.question);
+
+    // Empty question field of previous quesions and add the new question
     $('#question').empty().append(currentTrivia.question);
 
+    // Set the new options based on current trivia
     SetOptions(currentTrivia);
-    timer = setTimeout(function() {TimeUp(currentTrivia);}, 3 * 1000);
+
+    // Start interval with global variable
+    timer = setInterval(Countdown, 1000);
 }
 
-function TimeUp(currentQuestion) {
+function TimeUp() {
     // Tell Player the time is up
+    clearInterval(timer);
+    ClearOptions();
     console.log("Time's Up!!!");
 
     // Tell the player the right answer
-    var correctAnswer = currentQuestion.GetAnswer();
+    var correctAnswer = currentTrivia.GetAnswer();
     $("#question").html("The Correct Answer Was" + correctAnswer);
     console.log("The Correct Answer Was", correctAnswer);
 
     // Display next Question after a few seconds if more questions remain
     if(remainingQuestions > 0) {
-        setTimeout(AskTrivia(triviaArray), 3 * 1000);
+        setTimeout(AskTrivia, resultInterval * 1000);
+        console.log("New question in ", resultInterval);
     }
 }
 
 function CorrectAnswer() {
+    // Stop Countdown Timer and clear options
+    clearInterval(timer);
+    ClearOptions();
+
     // Congratulate Player
     $("#question").html("Congratulations!!! That's Correct!");
     console.log("Congratulations!!! That's Correct!");
 
-    // // Display next Question after a few seconds if more questions remain
-    // if(remainingQuestions > 0) {
-    //     setTimeout(AskTrivia(triviaArray), 3 * 1000);
-    // }
+
+    // Display next Question after a few seconds if more questions remain
+    if(remainingQuestions > 0) {
+        setTimeout(AskTrivia, resultInterval * 1000);
+    }
 }
 
-function WrongAnswer(currentQuestion) {
+function WrongAnswer() {
+    // Stop Countdown Timer and clear options
+    clearInterval(timer);
+    ClearOptions();
+    
     // Tell Player They Chose Wrong
     $("#question").html("Boooo!!! That's Wrong");
     console.log("Boooo!!! That's Wrong");
 
-    // Show correct answercorrect answer
-    var correctAnswer = currentQuestion.GetAnswer();
+    // Show correct correct answer
+    var correctAnswer = currentTrivia.GetAnswer();
     console.log("The Correct Answer Was", correctAnswer);
 
-    // // Display next Question after a few seconds if more questions remain
-    // if(remainingQuestions > 0) {
-    //     setTimeout(AskTrivia(triviaArray), 3 * 1000);
-    // }
+    // Display next Question after a few seconds if more questions remain
+    if(remainingQuestions > 0) {
+        setTimeout(AskTrivia, resultInterval * 1000);
+    }
 }
 
+function ClearOptions(){
+    // Clear button answers
+    $('#options').empty();
+}
+
+function Countdown(){
+    count--;
+    if (count <= 0){
+        // Times Up!
+        console.log("Times UP!");
+        TimeUp();
+    }
+
+    // TO DO: 
+    // Display current time 
+    console.log(count);
+}
 
