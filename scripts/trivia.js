@@ -54,12 +54,15 @@ var questionBank = [
 ];
 
 // Variables used for initializing and resetting after changes
-var remainingQuestions = 10;
-var questionInterval = 30;
+var startingQuestions = 10;
+var questionInterval = 20;
 var resultInterval = 3;
+var right = 0;
+var wrong = 0;
 
 // Variables used for tracking changes
-var count = questionInterval;
+var remainingQuestions = startingQuestions;
+var count;
 var timer;
 var currentTrivia;
 
@@ -117,7 +120,6 @@ function AskTrivia(){
     // Start interval with global variable
     $('#timer').html("Time Remaining: " + count + " seconds");
     timer = setInterval(Countdown, 1000);
-
 }
 
 function TimeUp() {
@@ -133,13 +135,11 @@ function TimeUp() {
     console.log("The Correct Answer Was", correctAnswer);
 
     // Display next Question after a few seconds if more questions remain
-    if(remainingQuestions > 0) {
-        setTimeout(AskTrivia, resultInterval * 1000);
-        console.log("New question in ", resultInterval);
-    }
+    Continue();
 }
 
 function CorrectAnswer() {
+    right++;
     // Stop Countdown Timer and clear options
     clearInterval(timer);
     ClearOptions();
@@ -150,12 +150,11 @@ function CorrectAnswer() {
     console.log("Congratulations!!! That's Correct!");
 
     // Display next Question after a few seconds if more questions remain
-    if(remainingQuestions > 0) {
-        setTimeout(AskTrivia, resultInterval * 1000);
-    }
+    setTimeout(Continue, resultInterval * 1000);
 }
 
 function WrongAnswer() {
+    wrong++;
     // Stop Countdown Timer and clear options
     clearInterval(timer);
     ClearOptions();
@@ -169,9 +168,7 @@ function WrongAnswer() {
     $("#question").html("<h2>That's Wrong. The Correct Answer Was: " + correctAnswer + "</h2>");
 
     // Display next Question after a few seconds if more questions remain
-    if(remainingQuestions > 0) {
-        setTimeout(AskTrivia, resultInterval * 1000);
-    }
+    setTimeout(Continue, resultInterval * 1000);
 }
 
 function ClearOptions(){
@@ -191,12 +188,42 @@ function Countdown(){
     }
 }
 
+function Start(){
+    // Reset all starting variables
+    remainingQuestions = startingQuestions;
+    right = 0;
+    wrong = 0;
+    AskTrivia();
+    $('#results').hide();
+}
 
+function EndTrivia(){
+    console.log("Trivia Over");
+    $('#btn-start').show();
+    $('#results').show();
+
+    $("#question").html("<h2>That's All Folks</h2>");
+    $('#results').empty()
+        .append("<h3>Correct Guesses: " + right + "</h3><br>")
+        .append("<h3>Incorrect Guesses: " + wrong + "</h3>");
+
+}
+
+function Continue(){
+    if(remainingQuestions > 0) {
+        AskTrivia();
+    }
+    else{
+        console.log("Ending Trivia");
+        EndTrivia();
+    }
+}
 
 $( document ).ready(function() {
 
+    $('#results').hide();
     $('#btn-start').on("click", function() {
-        AskTrivia();
+        Start();
         $(this).hide();
         console.log("Starting Trivia!!!");
     });
