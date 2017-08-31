@@ -72,8 +72,8 @@ $( document ).ready(function() {
     var key = "793386d43c174b9aac620baf8736bae5";
     var search = "win";
     var search2 = "lose";
-    var queryURL = "http://api.giphy.com/v1/gifs/search?q="+search+"&api_key=" + key;
-    var queryURL2 = "http://api.giphy.com/v1/gifs/search?q="+search2+"&api_key=" + key;
+    var queryURL = "https://api.giphy.com/v1/gifs/search?q="+search+"&api_key=" + key;
+    var queryURL2 = "https://api.giphy.com/v1/gifs/search?q="+search2+"&api_key=" + key;
     
     var winURL = [];
     var loseURL = [];
@@ -240,13 +240,13 @@ $( document ).ready(function() {
             $('#results')
                 .show()
                 .empty()
-                .append('<iframe src="'+winURL[randIndex]+'" width="480" height="360" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p>via GIPHY</p>');
+                .append('<iframe src="'+winURL[randIndex]+'" width="480" height="360"></iframe><p>via GIPHY</p>');
         }
         else{
             $('#results')
             .show()
             .empty()
-            .append('<iframe src="'+loseURL[randIndex]+'" width="480" height="360" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p>via GIPHY</p>');
+            .append('<iframe src="'+loseURL[randIndex]+'" width="480" height="360"></iframe><p>via GIPHY</p>');
         }
     }
     // CODE START
