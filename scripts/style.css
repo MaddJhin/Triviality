@@ -1,3 +1,6 @@
+body{
+    font-family: 'Comfortaa', cursive;
+}
 
 .container{
     margin: 40px auto;
@@ -25,6 +28,7 @@ button.btn.btn-info.btn-block{
     padding: 10px;
 }
 
-#question {
-
+#timer {
+    margin: 10px;
+    font-style: bold;
 }
