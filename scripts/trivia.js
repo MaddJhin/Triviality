@@ -240,13 +240,13 @@ $( document ).ready(function() {
             $('#results')
                 .show()
                 .empty()
-                .append('<iframe src="'+winURL[randIndex]+'" width="480" height="360"></iframe><p>via GIPHY</p>');
+                .append('<iframe src="'+winURL[randIndex]+'" width="480" height="360" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p>via GIPHY</p>');
         }
         else{
             $('#results')
             .show()
             .empty()
-            .append('<iframe src="'+loseURL[randIndex]+'" width="480" height="360"></iframe><p>via GIPHY</p>');
+            .append('<iframe src="'+loseURL[randIndex]+'" width="480" height="360" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p>via GIPHY</p>');
         }
     }
     // CODE START
