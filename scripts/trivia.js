@@ -228,4 +228,16 @@ $( document ).ready(function() {
         console.log("Starting Trivia!!!");
     });
 
+    var key = "793386d43c174b9aac620baf8736bae5";
+    var search = "win";
+    var queryURL = "http://api.giphy.com/v1/gifs/search?q="+search+"&api_key=" + key;
+
+    $.ajax({
+        url: queryURL,
+        method: "GET"
+      }).done(function(response) {
+        var randomIndex = Math.floor(Math.random() * response.data.length);
+        console.log(response.data[randomIndex].url);
+    });
+
 });
